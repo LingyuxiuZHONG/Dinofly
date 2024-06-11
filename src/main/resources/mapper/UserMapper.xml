@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kevin.dinofly.mapper.UserMapper">
+    <resultMap id="userResultMap" type="com.kevin.dinofly.model.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="email" column="email"/>
+        <result property="emailVerifiedAt" column="email_verified_at"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="description" column="description"/>
+        <result property="profileImage" column="profile_image"/>
+        <result property="role" column="role"/>
+    </resultMap>
+    <update id="updateUser">
+        UPDATE user
+        <set>
+            <if test="username != null">username = #{username},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="emailVerifiedAt != null">email_verified_at = #{emailVerifiedAt},</if>
+            <if test="phoneNumber != null">phone_number = #{phoneNumber},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="profileImage != null">profile_image = #{profileImage},</if>
+            <if test="role != null">role = #{role},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+</mapper>

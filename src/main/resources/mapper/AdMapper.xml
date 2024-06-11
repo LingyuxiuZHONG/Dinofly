@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kevin.dinofly.mapper.AdMapper">
+
+    <resultMap id="AdResultMap" type="Ad">
+        <id property="id" column="id"/>
+        <result property="homeType" column="home_type"/>
+        <result property="totalOccupancy" column="total_occupancy"/>
+        <result property="totalBedrooms" column="total_bedrooms"/>
+        <result property="totalBathrooms" column="total_bathrooms"/>
+        <result property="description" column="description"/>
+        <result property="address" column="address"/>
+        <result property="hasTv" column="has_tv"/>
+        <result property="hasKitchen" column="has_kitchen"/>
+        <result property="hasAirCon" column="has_air_con"/>
+        <result property="hasHeating" column="has_heating"/>
+        <result property="hasInternet" column="has_internet"/>
+        <result property="price" column="price"/>
+        <result property="publishedAt" column="published_at"/>
+        <result property="ownerId" column="owner_id"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+        <result property="latitude" column="latitude"/>
+        <result property="longitude" column="longitude"/>
+    </resultMap>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO ad (
+            home_type, total_occupancy, total_bedrooms, total_bathrooms,
+            description, address, has_tv, has_kitchen, has_air_con,
+            has_heating, has_internet, price, published_at, owner_id,
+            created_at, updated_at, latitude, longitude
+        ) VALUES (
+                     #{homeType}, #{totalOccupancy}, #{totalBedrooms}, #{totalBathrooms},
+                     #{description}, #{address}, #{hasTv}, #{hasKitchen}, #{hasAirCon},
+                     #{hasHeating}, #{hasInternet}, #{price}, #{publishedAt}, #{ownerId},
+                     #{createdAt}, #{updatedAt}, #{latitude}, #{longitude}
+                 )
+    </insert>
+
+    <select id="findAdById" resultMap="AdResultMap">
+        SELECT * FROM ad WHERE id = #{id}
+    </select>
+
+    <select id="findAllAds" resultMap="AdResultMap">
+        SELECT * FROM ad
+    </select>
+
+    <update id="updateAd">
+        UPDATE ad
+        <set>
+            <if test="homeType != null">home_type = #{homeType},</if>
+            <if test="totalOccupancy != null">total_occupancy = #{totalOccupancy},</if>
+            <if test="totalBedrooms != null">total_bedrooms = #{totalBedrooms},</if>
+            <if test="totalBathrooms != null">total_bathrooms = #{totalBathrooms},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="hasTv != null">has_tv = #{hasTv},</if>
+            <if test="hasKitchen != null">has_kitchen = #{hasKitchen},</if>
+            <if test="hasAirCon != null">has_air_con = #{hasAirCon},</if>
+            <if test="hasHeating != null">has_heating = #{hasHeating},</if>
+            <if test="hasInternet != null">has_internet = #{hasInternet},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="publishedAt != null">published_at = #{publishedAt},</if>
+            <if test="ownerId != null">owner_id = #{ownerId},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+            <if test="latitude != null">latitude = #{latitude},</if>
+            <if test="longitude != null">longitude = #{longitude},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+
+
+</mapper>
