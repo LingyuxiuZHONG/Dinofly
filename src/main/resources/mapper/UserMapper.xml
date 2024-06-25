@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kevin.dinofly.mapper.UserMapper">
     <resultMap id="userResultMap" type="com.kevin.dinofly.model.User">
-        <id property="id" column="id"/>
+        <id property="userId" column="id"/>
         <result property="username" column="username"/>
         <result property="password" column="password"/>
         <result property="email" column="email"/>
@@ -26,6 +26,6 @@
             <if test="profileImage != null">profile_image = #{profileImage},</if>
             <if test="role != null">role = #{role},</if>
         </set>
-        WHERE id = #{id}
+        WHERE id = #{userId}
     </update>
 </mapper>

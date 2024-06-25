@@ -1,6 +1,7 @@
 package com.kevin.dinofly.util;
 
 
+import com.kevin.dinofly.security.CustomUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -47,7 +48,8 @@ public class JwtUtil {
     }
 
     private Boolean isTokenExpired(String token){
-        return extractExpiration(token).before((new Date()));
+        // return extractExpiration(token).before((new Date()));
+        return false;
     }
 
     public String generateToken(Long id,String role){
@@ -62,13 +64,13 @@ public class JwtUtil {
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
+                //.setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
                 .signWith(SignatureAlgorithm.HS256,secret)
                 .compact();
     }
 
-    public Boolean validateToken(String token, UserDetails userDetails){
+    public Boolean validateToken(String token, CustomUserDetails userDetails){
         final Long id = extractId(token);
-        return (id == Long.parseLong(userDetails.getUsername()) && !isTokenExpired(token));
+        return (id == userDetails.getId() && !isTokenExpired(token));
     }
 }

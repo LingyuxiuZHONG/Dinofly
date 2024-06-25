@@ -1,8 +1,8 @@
 package com.kevin.dinofly.controller;
 
 
-import com.kevin.dinofly.model.AuthRequest;
-import com.kevin.dinofly.model.AuthResponse;
+import com.kevin.dinofly.model.dto.AuthRequest;
+import com.kevin.dinofly.model.dto.AuthResponse;
 import com.kevin.dinofly.model.User;
 import com.kevin.dinofly.service.UserService;
 import com.kevin.dinofly.util.JwtUtil;
@@ -29,7 +29,7 @@ public class AuthController {
         User user = userService.authenticate(authRequest);
 
         if(user != null){
-            String token = jwtUtil.generateToken(user.getId(),user.getRole());
+            String token = jwtUtil.generateToken(user.getUserId(),user.getRole());
             return ResponseEntity.ok(new AuthResponse(token));
         }else{
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");

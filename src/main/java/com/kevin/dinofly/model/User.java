@@ -1,8 +1,6 @@
 package com.kevin.dinofly.model;
 
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 
@@ -10,7 +8,7 @@ import java.sql.Timestamp;
 
 @Data
 public class User {
-    private Long id;
+    private Long userId;
     private String username;
     private String password;
 

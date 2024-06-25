@@ -1,8 +1,7 @@
 package com.kevin.dinofly.controller;
 
 
-import com.kevin.dinofly.model.User;
-import com.kevin.dinofly.model.UserDTO;
+import com.kevin.dinofly.model.dto.UserDTO;
 import com.kevin.dinofly.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

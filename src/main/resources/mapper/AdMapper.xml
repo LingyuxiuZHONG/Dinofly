@@ -5,7 +5,7 @@
 <mapper namespace="com.kevin.dinofly.mapper.AdMapper">
 
     <resultMap id="AdResultMap" type="Ad">
-        <id property="id" column="id"/>
+        <id property="adId" column="id"/>
         <result property="homeType" column="home_type"/>
         <result property="totalOccupancy" column="total_occupancy"/>
         <result property="totalBedrooms" column="total_bedrooms"/>

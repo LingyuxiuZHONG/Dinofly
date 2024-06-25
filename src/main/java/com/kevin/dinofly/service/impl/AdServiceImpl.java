@@ -3,7 +3,7 @@ package com.kevin.dinofly.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.kevin.dinofly.mapper.AdMapper;
 import com.kevin.dinofly.model.Ad;
-import com.kevin.dinofly.model.AdDTO;
+import com.kevin.dinofly.model.dto.AdDTO;
 import com.kevin.dinofly.service.AdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class AdServiceImpl implements AdService {
     @Override
     public Long save(Ad ad) {
         adMapper.save(ad);
-        return ad.getId();
+        return ad.getAdId();
     }
 
     @Override

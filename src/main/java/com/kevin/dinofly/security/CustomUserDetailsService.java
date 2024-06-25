@@ -18,13 +18,14 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 
 
-    public UserDetails loadUserById(Long userId) throws UsernameNotFoundException {
+    public CustomUserDetails loadUserById(Long userId) throws UsernameNotFoundException {
         User user = userMapper.findUserById(userId);
         if (user == null) {
             throw new UsernameNotFoundException("User not found with id: " + userId);
         }
         return new CustomUserDetails(
-                user.getId(),
+                user.getUserId(),
+                user.getUsername(),
                 user.getPassword(),
                 user.getRole()
         );

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kevin.dinofly.mapper.ReservationMapper">
+
+    <!-- 定义ResultMap -->
+    <resultMap id="ReservationResultMap" type="Reservation">
+        <id property="reservationId" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="adId" column="ad_id"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+        <result property="price" column="price"/>
+        <result property="total" column="total"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <!-- 插入预约信息 -->
+    <insert id="createReservation" >
+        INSERT INTO reservation (id, user_id, ad_id, start_date, end_date, price, total, created_at, updated_at, status)
+        VALUES (#{reservationId}, #{userId}, #{adId}, #{startDate}, #{endDate}, #{price}, #{total}, #{createdAt}, #{updatedAt}, #{status})
+    </insert>
+
+    <!-- 根据ID获取预约信息 -->
+    <select id="getReservationById" parameterType="String" resultMap="ReservationResultMap">
+        SELECT id, user_id, ad_id, start_date, end_date, price, total, created_at, updated_at, status
+        FROM reservation
+        WHERE id = #{id}
+    </select>
+
+    <!-- 更新预约状态 -->
+    <update id="updateReservationStatus">
+        UPDATE reservation
+        SET status = #{status}
+        WHERE id = #{id}
+    </update>
+
+</mapper>

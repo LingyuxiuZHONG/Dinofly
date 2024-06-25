@@ -2,7 +2,7 @@ package com.kevin.dinofly.controller;
 
 
 import com.kevin.dinofly.model.Ad;
-import com.kevin.dinofly.model.AdDTO;
+import com.kevin.dinofly.model.dto.AdDTO;
 import com.kevin.dinofly.service.AdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +34,7 @@ public class AdController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateAd(@PathVariable Long id, @RequestBody Ad ad) {
-        ad.setId(id);
+        ad.setAdId(id);
         adService.updateAd(ad);
         return ResponseEntity.ok(null);
     }

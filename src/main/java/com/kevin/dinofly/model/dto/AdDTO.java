@@ -1,4 +1,4 @@
-package com.kevin.dinofly.model;
+package com.kevin.dinofly.model.dto;
 
 import lombok.Data;
 

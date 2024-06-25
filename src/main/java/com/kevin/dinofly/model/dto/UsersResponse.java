@@ -1,4 +1,4 @@
-package com.kevin.dinofly.model;
+package com.kevin.dinofly.model.dto;
 
 
 import jakarta.validation.constraints.NotEmpty;
@@ -8,10 +8,13 @@ import lombok.Data;
 import java.sql.Timestamp;
 
 @Data
-public class UserDTO {
+public class UsersResponse {
     private Long id;
     private String username;
+    private String email;
+    private Timestamp emailVerifiedAt;
     private String phoneNumber;
     private String description;
     private String profileImage = "default.jpg";
+    private String role;
 }

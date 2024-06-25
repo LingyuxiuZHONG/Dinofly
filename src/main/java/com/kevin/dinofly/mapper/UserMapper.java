@@ -13,8 +13,8 @@ public interface UserMapper {
     @Select("SELECT id, username, password FROM user WHERE username = #{username}")
     User findUserByUsername(@Param("username") String username);
 
-    @Select("SELECT * FROM user WHERE id = #{id}")
-    User findUserById(Long id);
+    @Select("SELECT id AS userId, username, password, email, email_verified_at AS emailVerifiedAt, phone_number AS phoneNumber, description, profile_image AS profileImage, role FROM user WHERE id = #{userId}")
+    User findUserById(Long userId);
 
     @Insert("INSERT INTO user (username, email, password, phone_number, description, profile_image,role) " +
             "VALUES (#{username}, #{email}, #{password}, #{phoneNumber}, #{description}, #{profileImage},#{role})")

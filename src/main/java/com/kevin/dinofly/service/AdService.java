@@ -1,7 +1,7 @@
 package com.kevin.dinofly.service;
 
 import com.kevin.dinofly.model.Ad;
-import com.kevin.dinofly.model.AdDTO;
+import com.kevin.dinofly.model.dto.AdDTO;
 
 import java.util.List;
 

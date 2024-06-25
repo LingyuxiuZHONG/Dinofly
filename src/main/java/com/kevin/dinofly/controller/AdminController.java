@@ -1,7 +1,6 @@
 package com.kevin.dinofly.controller;
 
 
-import com.kevin.dinofly.model.Ad;
 import com.kevin.dinofly.model.User;
 import com.kevin.dinofly.service.AdService;
 import com.kevin.dinofly.service.UserService;
@@ -33,7 +32,7 @@ public class AdminController {
 
     @PutMapping("/users/{id}")
     public ResponseEntity<?> updateUser(@PathVariable Long id,@RequestBody User user){
-        user.setId(id);
+        user.setUserId(id);
         userService.update(user);
         return ResponseEntity.ok(null);
     }

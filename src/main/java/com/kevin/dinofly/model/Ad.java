@@ -1,7 +1,5 @@
 package com.kevin.dinofly.model;
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -9,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class Ad {
-    private Long id;
+    private Long adId;
     private String homeType;
     private Integer totalOccupancy;
     private Integer totalBedrooms;

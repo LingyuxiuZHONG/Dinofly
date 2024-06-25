@@ -3,9 +3,9 @@ package com.kevin.dinofly.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.kevin.dinofly.mapper.UserMapper;
-import com.kevin.dinofly.model.AuthRequest;
+import com.kevin.dinofly.model.dto.AuthRequest;
 import com.kevin.dinofly.model.User;
-import com.kevin.dinofly.model.UserDTO;
+import com.kevin.dinofly.model.dto.UserDTO;
 import com.kevin.dinofly.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Long save(User user) {
         userMapper.save(user);
-        return user.getId();
+        return user.getUserId();
     }
 
     @Override

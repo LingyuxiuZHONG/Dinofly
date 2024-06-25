@@ -1,9 +1,9 @@
 package com.kevin.dinofly.service;
 
 
-import com.kevin.dinofly.model.AuthRequest;
+import com.kevin.dinofly.model.dto.AuthRequest;
 import com.kevin.dinofly.model.User;
-import com.kevin.dinofly.model.UserDTO;
+import com.kevin.dinofly.model.dto.UserDTO;
 
 import java.util.List;
 

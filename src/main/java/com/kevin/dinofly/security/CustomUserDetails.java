@@ -10,12 +10,14 @@ import java.util.Collections;
 
 public class CustomUserDetails implements UserDetails {
     private Long id;
+    private String username;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
 
-    public CustomUserDetails(Long id, String password, String role) {
+    public CustomUserDetails(Long id, String username,String password, String role) {
         this.id = id;
+        this.username = username;
         this.password = password;
         this.authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role));
     }
@@ -31,13 +33,14 @@ public class CustomUserDetails implements UserDetails {
         return password;
     }
 
-    /**
-     * get id
-     * @return
-     */
+
     @Override
     public String getUsername() {
-        return String.valueOf(id);
+        return username;
+    }
+
+    public Long getId(){
+        return id;
     }
 
 
