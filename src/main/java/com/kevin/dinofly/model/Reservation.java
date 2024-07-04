@@ -3,6 +3,7 @@ package com.kevin.dinofly.model;
 
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Data
@@ -14,8 +15,8 @@ public class Reservation {
     private Date endDate;
     private double price;
     private double total;
-    private Date createdAt;
-    private Date updatedAt;
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
     private String status;
     @Override
     public String toString() {

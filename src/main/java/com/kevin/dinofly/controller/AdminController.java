@@ -2,8 +2,7 @@ package com.kevin.dinofly.controller;
 
 
 import com.kevin.dinofly.model.User;
-import com.kevin.dinofly.service.AdService;
-import com.kevin.dinofly.service.UserService;
+import com.kevin.dinofly.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +14,8 @@ import java.util.List;
 public class AdminController {
 
     @Autowired
-    private UserService userService;
+    private AdminService adminService;
 
-    @Autowired
-    private AdService adService;
 
     /*
      * User Management
@@ -26,21 +23,13 @@ public class AdminController {
      */
     @DeleteMapping("/users/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id){
-        userService.deleteUser(id);
-        return ResponseEntity.ok(null);
+        return adminService.deleteUser(id);
     }
 
-    @PutMapping("/users/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Long id,@RequestBody User user){
-        user.setUserId(id);
-        userService.update(user);
-        return ResponseEntity.ok(null);
-    }
 
     @GetMapping("/users")
-    public ResponseEntity<?> getUsers(){
-        List<User> users = userService.getUsers();
-        return ResponseEntity.ok(users);
+    public ResponseEntity<?> getAllUsers(){
+        return adminService.getAllUsers();
     }
 
 
@@ -52,8 +41,7 @@ public class AdminController {
 
     @DeleteMapping("/ads/{id}")
     public ResponseEntity<?> deleteAd(@PathVariable Long id){
-        adService.deleteAd(id);
-        return ResponseEntity.ok(null);
+        return adminService.deleteAd(id);
     }
 
 

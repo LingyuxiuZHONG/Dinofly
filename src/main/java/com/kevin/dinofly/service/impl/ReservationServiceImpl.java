@@ -11,11 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -38,75 +39,36 @@ public class ReservationServiceImpl implements ReservationService {
 
 
 
-    /*
-    @Override
-    public Reservation createReservation(Long adId, Reservation reservation) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()) {
-            Object principal = authentication.getPrincipal();
-            if (principal instanceof UserDetails) {
-                String id = UUID.randomUUID().toString();
-                CustomUserDetails userDetails = (CustomUserDetails) principal;
-                reservation.setReservationId(id);
-                reservation.setUserId(userDetails.getId());
-                reservation.setAdId(adId);
-                reservation.setCreatedAt(new Date());
-                reservation.setUpdatedAt(new Date());
-                reservation.setStatus("WAIT_BUYER_PAY");
 
-                // 将订单状态缓存到 Redis
-                stringRedisTemplate.opsForValue().set(RESERVATION_KEY_PREFIX + id, JSONUtil.toJsonStr(reservation),RESERVATION_AUTO_CANCEL_TIME, TimeUnit.SECONDS);
-
-                // 异步保存预订信息
-                executorService.submit(() -> {
-                    try {
-                        reservationMapper.createReservation(reservation);
-                        log.info("Reservation saved successfully: {}", reservation.getReservationId());
-                    } catch (Exception e) {
-                        log.error("Error saving reservation: {}", e.getMessage(), e);
-                        stringRedisTemplate.delete(RESERVATION_KEY_PREFIX + id);
-
-                    }
-                });
-                return reservation;
-            }
-        }
-        return null;
-    }*/
 
     @Override
-    public Reservation createReservation(Long adId, Reservation reservation) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()) {
-            Object principal = authentication.getPrincipal();
-            if (principal instanceof UserDetails) {
-                String id = UUID.randomUUID().toString();
-                CustomUserDetails userDetails = (CustomUserDetails) principal;
-                reservation.setReservationId(id);
-                reservation.setUserId(userDetails.getId());
-                reservation.setAdId(adId);
-                reservation.setCreatedAt(new Date());
-                reservation.setUpdatedAt(new Date());
-                reservation.setStatus("WAIT_BUYER_PAY");
+    public Reservation createReservation(Long adId, Reservation reservation, CustomUserDetails userDetails) {
 
-                // 将订单状态缓存到 Redis
-                stringRedisTemplate.opsForValue().set(RESERVATION_KEY_PREFIX + id, JSONUtil.toJsonStr(reservation),RESERVATION_AUTO_CANCEL_TIME, TimeUnit.SECONDS);
+            String id = UUID.randomUUID().toString();
+            reservation.setReservationId(id);
+            reservation.setUserId(userDetails.getId());
+            reservation.setAdId(adId);
+            reservation.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+            reservation.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+            reservation.setStatus("WAIT_BUYER_PAY");
 
-                // 异步保存预订信息
-                executorService.submit(() -> {
-                    try {
-                        reservationMapper.createReservation(reservation);
-                        log.info("Reservation saved successfully: {}", reservation.getReservationId());
-                    } catch (Exception e) {
-                        log.error("Error saving reservation: {}", e.getMessage(), e);
-                        stringRedisTemplate.delete(RESERVATION_KEY_PREFIX + id);
+            // 将订单状态缓存到 Redis
+            stringRedisTemplate.opsForValue().set(RESERVATION_KEY_PREFIX + id, JSONUtil.toJsonStr(reservation),RESERVATION_AUTO_CANCEL_TIME, TimeUnit.SECONDS);
 
-                    }
-                });
-                return reservation;
-            }
-        }
-        return null;
+            // 异步保存预订信息
+            executorService.submit(() -> {
+                try {
+                    reservationMapper.createReservation(reservation);
+                    log.info("Reservation saved successfully: {}", reservation.getReservationId());
+                } catch (Exception e) {
+                    log.error("Error saving reservation: {}", e.getMessage(), e);
+                    stringRedisTemplate.delete(RESERVATION_KEY_PREFIX + id);
+
+                }
+            });
+            return reservation;
+
+
     }
 
 
@@ -121,9 +83,9 @@ public class ReservationServiceImpl implements ReservationService {
                 updateReservationStatus(reservationId,"TRADE_SUCCESS");
                 stringRedisTemplate.delete(RESERVATION_KEY_PREFIX + reservationId);
             });
-            return "success";
+            return "Success";
         } else {
-            return "fail";
+            return "Payment failed, please pay as soon as possible. The order will be canceled after " + stringRedisTemplate.getExpire(RESERVATION_KEY_PREFIX + reservationId,TimeUnit.MINUTES);
         }
     }
 
@@ -153,7 +115,9 @@ public class ReservationServiceImpl implements ReservationService {
 
     private boolean simulatePayment() {
         // 模拟支付逻辑
-        return true; // 假设支付成功
+        Random r = new Random();
+
+        return r.nextBoolean(); // 假设支付成功
     }
 
 

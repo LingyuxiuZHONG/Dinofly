@@ -1,4 +1,4 @@
-package com.kevin.dinofly.listener;
+package com.kevin.dinofly.service.listener;
 
 import com.kevin.dinofly.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;

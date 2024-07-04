@@ -20,8 +20,8 @@ public class Ad {
     private Boolean hasHeating;
     private Boolean hasInternet;
     private Integer price;
+    private Long ownerId;
     private LocalDateTime publishedAt;
-    private Integer ownerId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Double latitude;

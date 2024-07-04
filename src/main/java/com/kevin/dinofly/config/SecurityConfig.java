@@ -32,7 +32,7 @@ public class SecurityConfig {
                         // 允许对于网站静态资源的无授权访问
                         .requestMatchers(HttpMethod.GET, "/", "/*.html").permitAll()
                         // 对登录注册允许匿名访问
-                        .requestMatchers("/login", "/register","/chat/**", "/test/**").permitAll()
+                        .requestMatchers("/login", "/register","/chat/**","/code", "/test/**").permitAll()
                         // 跨域请求会先进行一次 options 请求
                         .requestMatchers(HttpMethod.OPTIONS).permitAll()
                         // 对于 admin 相关的路径，只有角色为 Admin 的用户能够访问

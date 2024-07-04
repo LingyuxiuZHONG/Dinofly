@@ -1,7 +1,6 @@
 package com.kevin.dinofly.security;
 
 import com.kevin.dinofly.mapper.UserMapper;
-import com.kevin.dinofly.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,16 +18,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 
     public CustomUserDetails loadUserById(Long userId) throws UsernameNotFoundException {
-        User user = userMapper.findUserById(userId);
+        CustomUserDetails user = userMapper.findUserDetailsById(userId);
         if (user == null) {
             throw new UsernameNotFoundException("User not found with id: " + userId);
         }
-        return new CustomUserDetails(
-                user.getUserId(),
-                user.getUsername(),
-                user.getPassword(),
-                user.getRole()
-        );
+        return user;
     }
 
 

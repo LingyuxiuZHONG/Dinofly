@@ -1,54 +1,42 @@
 package com.kevin.dinofly.controller;
 
 
-import com.kevin.dinofly.model.dto.AuthRequest;
-import com.kevin.dinofly.model.dto.AuthResponse;
-import com.kevin.dinofly.model.User;
-import com.kevin.dinofly.service.UserService;
-import com.kevin.dinofly.util.JwtUtil;
+import com.kevin.dinofly.model.dto.LoginRequest;
+import com.kevin.dinofly.model.dto.RegisterRequest;
+import com.kevin.dinofly.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class AuthController {
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
-    private JwtUtil jwtUtil;
+    private AuthService userService;
 
 
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) throws Exception {
-        User user = userService.authenticate(authRequest);
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest){
 
-        if(user != null){
-            String token = jwtUtil.generateToken(user.getUserId(),user.getRole());
-            return ResponseEntity.ok(new AuthResponse(token));
-        }else{
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
-        }
+        return userService.login(loginRequest);
+    }
+
+    @PostMapping("/code")
+    public ResponseEntity<?> generateCode(@RequestBody String phone){
+        return userService.generateCode(phone);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody User user){
-        if(userService.findByUsername(user.getUsername())){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username already exists");
-        }
-
-        Long id = userService.save(user);
-
-        String token = jwtUtil.generateToken(id,user.getRole());
-        return ResponseEntity.ok(new AuthResponse(token));
-
-
+    public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest){
+        return userService.register(registerRequest);
     }
+
+
 
 
 

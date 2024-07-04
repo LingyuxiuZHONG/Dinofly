@@ -26,7 +26,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     private final Map<String, WebSocketSession> sessions = new ConcurrentHashMap<>();
 
     @Override
-    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+    public void afterConnectionEstablished(WebSocketSession session) {
         String userId = getUserId(session); // 获取用户ID的方法
         if (userId != null) {
             sessions.put(userId, session);
@@ -52,7 +52,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 
 
     @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
         String userId = getUserId(session);
         if (userId != null) {
             sessions.remove(userId);

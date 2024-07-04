@@ -14,18 +14,20 @@
         <result property="profileImage" column="profile_image"/>
         <result property="role" column="role"/>
     </resultMap>
-    <update id="updateUser">
+    <update id="updateUserInfo">
         UPDATE user
         <set>
             <if test="username != null">username = #{username},</if>
-            <if test="password != null">password = #{password},</if>
             <if test="email != null">email = #{email},</if>
-            <if test="emailVerifiedAt != null">email_verified_at = #{emailVerifiedAt},</if>
             <if test="phoneNumber != null">phone_number = #{phoneNumber},</if>
             <if test="description != null">description = #{description},</if>
             <if test="profileImage != null">profile_image = #{profileImage},</if>
-            <if test="role != null">role = #{role},</if>
         </set>
         WHERE id = #{userId}
     </update>
+    <select id="existsByPhone" resultType="boolean" parameterType="String">
+        SELECT COUNT(1) > 0
+        FROM user
+        WHERE phone_number = #{phoneNumber}
+    </select>
 </mapper>

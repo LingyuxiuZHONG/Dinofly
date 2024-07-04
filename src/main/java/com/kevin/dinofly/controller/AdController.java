@@ -2,10 +2,11 @@ package com.kevin.dinofly.controller;
 
 
 import com.kevin.dinofly.model.Ad;
-import com.kevin.dinofly.model.dto.AdDTO;
+import com.kevin.dinofly.security.CustomUserDetails;
 import com.kevin.dinofly.service.AdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,8 +21,8 @@ public class AdController {
 
 
     @PostMapping("")
-    public ResponseEntity<?> createAd(@RequestBody Ad ad){
-        Long id = adService.save(ad);
+    public ResponseEntity<?> createAd(@RequestBody Ad ad, @AuthenticationPrincipal CustomUserDetails userDetails){
+        Long id = adService.save(ad,userDetails);
         return ResponseEntity.ok(id);
     }
 
@@ -43,14 +44,13 @@ public class AdController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getAd(@PathVariable Long id){
-        AdDTO adDTO = adService.getAdById(id);
-        return ResponseEntity.ok(adDTO);
+        return adService.getAdById(id);
     }
 
     @GetMapping("")
     public ResponseEntity<?> getAllAds(){
-        List<AdDTO> adDTOList = adService.getAllAds();
-        return ResponseEntity.ok(adDTOList);
+        List<Ad> adList = adService.getAllAds();
+        return ResponseEntity.ok(adList);
     }
 
 
