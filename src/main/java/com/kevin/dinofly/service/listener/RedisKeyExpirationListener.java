@@ -8,13 +8,13 @@ import org.springframework.data.redis.listener.KeyExpirationEventMessageListener
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
+import java.util.Map;
 
 @Component
 public class RedisKeyExpirationListener extends KeyExpirationEventMessageListener {
 
-    private static final String RESERVATION_KEY_PREFIX = Constants.RESERVATION_KEY_PREFIX;
-    private static final String STREAM_KEY = Constants.RESERVATION_EXPIRE_STREAM_KEY;
+    private static final String RESERVATION_TIMEOUT_KEY_PREFIX = Constants.RESERVATION_TIMEOUT_KEY_PREFIX;
+    private static final String RESERVATION_EXPIRE_STREAM_KEY = Constants.RESERVATION_EXPIRE_STREAM_KEY;
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
@@ -27,9 +27,9 @@ public class RedisKeyExpirationListener extends KeyExpirationEventMessageListene
     @Override
     public void onMessage(Message message, byte[] pattern) {
         String expiredKey = message.toString();
-        if (expiredKey.startsWith(RESERVATION_KEY_PREFIX)) {
-            String reservationId = expiredKey.substring(RESERVATION_KEY_PREFIX.length());
-            stringRedisTemplate.opsForStream().add(STREAM_KEY, Collections.singletonMap("reservationId", reservationId));
+        if (expiredKey.startsWith(RESERVATION_TIMEOUT_KEY_PREFIX)) {
+            String reservationId = expiredKey.substring(RESERVATION_TIMEOUT_KEY_PREFIX.length());
+            stringRedisTemplate.opsForStream().add(RESERVATION_EXPIRE_STREAM_KEY, Map.of("reservationId",reservationId,"status","TRADE_CLOSED"));
         }
     }
 }

@@ -16,6 +16,7 @@ public class Constants {
 
     public static final String PROFILE_IMAGE_GROUP_NAME = "dinofly:profile:group";
     public static final String PROFILE_IMAGE_CONSUMER_NAME = "dinofly:profile:consumer";
+    public static final String RESERVATION_TIMEOUT_KEY_PREFIX = "reservation:timeout:";
 
 
 

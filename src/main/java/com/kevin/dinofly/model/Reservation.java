@@ -3,12 +3,13 @@ package com.kevin.dinofly.model;
 
 import lombok.Data;
 
+import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.Date;
+
 
 @Data
 public class Reservation {
-    private String reservationId;
+    private long reservationId;
     private long userId;
     private long adId;
     private Date startDate;

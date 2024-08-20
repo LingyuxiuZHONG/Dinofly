@@ -22,30 +22,18 @@ public class ReservationController {
     @PostMapping("/{adId}")
     public ResponseEntity<?> createReservation(@PathVariable Long adId, @RequestBody Reservation reservation, @AuthenticationPrincipal CustomUserDetails userDetails){
 
-        Reservation afterCreate = reservationService.createReservation(adId,reservation,userDetails);
-        return ResponseEntity.ok(afterCreate);
+        return reservationService.createReservation(adId,reservation,userDetails);
 
     }
 
     @PostMapping("/submit")
     public ResponseEntity<?> submitPayment(@RequestBody PaymentRequest paymentRequest) {
-        String paymentStatus = reservationService.processPayment(paymentRequest.getReservationId());
-        return ResponseEntity.ok(paymentStatus);
+        return reservationService.processPayment(paymentRequest.getReservationId());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getReservationById(@PathVariable String id) {
-        try {
-            // 调用服务层获取预订信息
-            Reservation reservation = reservationService.getReservationById(id);
-            if (reservation != null) {
-                return ResponseEntity.ok(reservation);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (Exception e) {
-            // 处理异常情况
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to retrieve reservation");
-        }
+        return reservationService.getReservationById(id);
+
     }
 }

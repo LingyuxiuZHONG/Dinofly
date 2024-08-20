@@ -26,7 +26,7 @@
         <result property="longitude" column="longitude"/>
     </resultMap>
 
-    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+    <insert id="save" useGeneratedKeys="true" keyProperty="adId">
         INSERT INTO ad (
             home_type, total_occupancy, total_bedrooms, total_bathrooms,
             description, address, has_tv, has_kitchen, has_air_con,

@@ -77,8 +77,6 @@ public class AdServiceImpl implements AdService {
             return ResponseEntity.ok(JSONUtil.toBean(adJson,Ad.class));
         }
 
-
-
         try {
             //否则去数据库中查
             boolean flag = tryLock(LOCK_AD_KEY + id);

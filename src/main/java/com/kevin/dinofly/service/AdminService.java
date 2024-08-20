@@ -9,4 +9,6 @@ public interface AdminService {
     ResponseEntity<?> getAllUsers();
 
     ResponseEntity<?> deleteAd(Long id);
+
+    ResponseEntity<?> changeUserRole(Long id, String role);
 }

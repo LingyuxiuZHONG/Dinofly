@@ -25,7 +25,7 @@
     </insert>
 
     <!-- 根据ID获取预约信息 -->
-    <select id="getReservationById" parameterType="String" resultMap="ReservationResultMap">
+    <select id="getReservationById" resultMap="ReservationResultMap">
         SELECT id, user_id, ad_id, start_date, end_date, price, total, created_at, updated_at, status
         FROM reservation
         WHERE id = #{id}
@@ -37,5 +37,20 @@
         SET status = #{status}
         WHERE id = #{id}
     </update>
+
+
+    <select id="isOverlappingReservationExists" resultType="boolean">
+        SELECT COUNT(*)
+        FROM Reservation
+        WHERE ad_id = #{adId}
+          AND (
+                (#{startDate} BETWEEN start_date AND end_date)
+                OR (#{endDate} BETWEEN start_date AND end_date)
+                OR (#{startDate} &lt; start_date AND #{endDate} &gt; end_date)
+            )
+    </select>
+
+
+
 
 </mapper>

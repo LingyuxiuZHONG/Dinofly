@@ -14,7 +14,7 @@ public interface AdMapper {
     Ad findAdById(Long id);
 
     @Delete("DELETE FROM ad WHERE id = #{id}")
-    void deleteAd(Long id);
+    int deleteAd(Long id);
 
 
     List<Ad> findAllAds();

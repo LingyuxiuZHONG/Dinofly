@@ -17,10 +17,7 @@ public class AdminController {
     private AdminService adminService;
 
 
-    /*
-     * User Management
-     *
-     */
+
     @DeleteMapping("/users/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id){
         return adminService.deleteUser(id);
@@ -33,11 +30,12 @@ public class AdminController {
     }
 
 
+    @PutMapping("/users/{id}")
+    public ResponseEntity<?> changeUserRole(@PathVariable Long id,@RequestBody String role){
+        return adminService.changeUserRole(id,role);
+    }
 
-    /*
-     * Ad Management
-     *
-     */
+
 
     @DeleteMapping("/ads/{id}")
     public ResponseEntity<?> deleteAd(@PathVariable Long id){

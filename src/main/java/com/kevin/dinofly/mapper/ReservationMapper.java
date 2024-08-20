@@ -1,9 +1,12 @@
 package com.kevin.dinofly.mapper;
 
 
+import cn.hutool.core.date.DateTime;
 import com.kevin.dinofly.model.Reservation;
 import org.apache.ibatis.annotations.*;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Mapper
@@ -13,6 +16,8 @@ public interface ReservationMapper {
     Reservation getReservationById(String id);
 
     void updateReservationStatus(@Param("id") String id, @Param("status") String status);
+
+    boolean isOverlappingReservationExists(long adId, Date startDate, Date endDate);
 
 //    @Update({
 //            "<script>",

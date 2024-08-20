@@ -2,13 +2,14 @@ package com.kevin.dinofly.service;
 
 import com.kevin.dinofly.model.Reservation;
 import com.kevin.dinofly.security.CustomUserDetails;
+import org.springframework.http.ResponseEntity;
 
 public interface ReservationService {
-    Reservation createReservation(Long adId, Reservation reservation, CustomUserDetails userDetails);
+    ResponseEntity<?> createReservation(Long adId, Reservation reservation, CustomUserDetails userDetails);
 
-    String processPayment(String reservationId);
+    ResponseEntity<?> processPayment(String reservationId);
 
-    Reservation getReservationById(String id);
+    ResponseEntity<?> getReservationById(String id);
 
 
     void updateReservationStatus(String reservationId, String status);

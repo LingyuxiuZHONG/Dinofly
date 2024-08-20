@@ -1,10 +1,12 @@
 package com.kevin.dinofly.security;
 
+import cn.hutool.json.JSONUtil;
 import com.kevin.dinofly.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +19,7 @@ import java.io.IOException;
 
 
 @Component
+@Slf4j
 public class JwtRequestFilter extends OncePerRequestFilter {
 
 
@@ -30,8 +33,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         final String authorizationHeader = request.getHeader("Authorization");
-
-
+        log.info("Authorization input:{}",authorizationHeader);
         String jwt = null;
         Long id = null;
 
@@ -49,6 +51,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 );
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                log.info("Authorization user:{}", JSONUtil.toJsonStr(userDetails));
             }
         }
         filterChain.doFilter(request,response);

@@ -14,6 +14,7 @@
         <result property="profileImage" column="profile_image"/>
         <result property="role" column="role"/>
     </resultMap>
+
     <update id="updateUserInfo">
         UPDATE user
         <set>
@@ -25,9 +26,16 @@
         </set>
         WHERE id = #{userId}
     </update>
+
     <select id="existsByPhone" resultType="boolean" parameterType="String">
         SELECT COUNT(1) > 0
         FROM user
         WHERE phone_number = #{phoneNumber}
+    </select>
+
+
+    <select id="findAllUsers" resultMap="userResultMap">
+        SELECT *
+        FROM user
     </select>
 </mapper>

@@ -27,11 +27,10 @@ public interface UserMapper {
     @Options(useGeneratedKeys = true, keyProperty = "userId")
     void save(User user);
 
-    @Select("SELECT * FROM user")
     List<User> findAllUsers();
 
     @Delete("DELETE FROM user where id = #{id}")
-    void deleteUser(Long id);
+    int deleteUser(Long id);
 
 
     boolean existsByPhone(String phoneNumber);
@@ -52,4 +51,6 @@ public interface UserMapper {
 
     @Update("UPDATE user SET profile_image = #{imageName} where id = #{userId}")
     void uploadProfileImage(Long userId, String imageName);
+
+    void changeUserRole(Long id, String role);
 }
